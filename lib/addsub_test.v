@@ -6,7 +6,7 @@ module addsub_test();
    reg carry;
    wire [7:0]res;
    wire cout;
-   
+
    addsub addsub0 (
       .x (x),
       .y (y),
@@ -40,4 +40,3 @@ module addsub_test();
       $monitor($time, "%d (%b) %d = %d", x, sub, y, res);
    end
 endmodule
-
