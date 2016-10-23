@@ -1,8 +1,8 @@
 module mem_test();
    reg mode;
-   wire [63:0] data_in;
-   wire [63:0] data_out;
-   wire [63:0] addr;
+   reg [63:0] data_in;
+   reg [63:0] data_out;
+   reg [63:0] addr;
 
    mem m0 (
            .mode (mode),
@@ -16,7 +16,7 @@ module mem_test();
 
       mode = 0;
       addr = 64'b0;
-      data_in = 64'b2017;
+      data_in = 64'd2017;
       #10;
 
       mode = 1;

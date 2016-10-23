@@ -1,9 +1,12 @@
-#! /usr/bin/vvp
-:ivl_version "0.9.7 " "(v0_9_7)";
+#! /usr/local/bin/vvp
+:ivl_version "10.1 (stable)";
+:ivl_delay_selection "TYPICAL";
 :vpi_time_precision + 0;
 :vpi_module "system";
+:vpi_module "vhdl_sys";
 :vpi_module "v2005_math";
 :vpi_module "va_math";
+<<<<<<< Updated upstream
 S_0x22aead0 .scope module, "float_addsub_test" "float_addsub_test" 2 1;
  .timescale 0 0;
 v0x22d1490_0 .var "a", 63 0;
@@ -50,6 +53,63 @@ T_1 ;
     %end;
     .thread T_1;
     .scope S_0x22aead0;
+=======
+S_0xe67390 .scope module, "float_addsub_test" "float_addsub_test" 2 1;
+ .timescale 0 0;
+v0xe9ef90_0 .var "a", 63 0;
+v0xe9f070_0 .var "b", 63 0;
+v0xe9f140_0 .var "sop", 0 0;
+v0xe9f240_0 .net "sum", 63 0, L_0xe9f740;  1 drivers
+S_0xe66f70 .scope module, "x0" "float_addsub" 2 7, 3 4 0, S_0xe67390;
+ .timescale 0 0;
+    .port_info 0 /INPUT 64 "a"
+    .port_info 1 /INPUT 64 "b"
+    .port_info 2 /INPUT 1 "sop"
+    .port_info 3 /OUTPUT 64 "sum"
+L_0xe9f520 .functor XOR 1, L_0xe9f310, L_0xe9f430, C4<0>, C4<0>;
+L_0xe9f630 .functor XOR 1, L_0xe9f520, v0xe9f140_0, C4<0>, C4<0>;
+L_0xe9f740 .functor BUFZ 64, v0xe9ef90_0, C4<0000000000000000000000000000000000000000000000000000000000000000>, C4<0000000000000000000000000000000000000000000000000000000000000000>, C4<0000000000000000000000000000000000000000000000000000000000000000>;
+v0xe886e0_0 .net *"_s1", 0 0, L_0xe9f310;  1 drivers
+v0xe9e8d0_0 .net *"_s3", 0 0, L_0xe9f430;  1 drivers
+v0xe9e9b0_0 .net *"_s4", 0 0, L_0xe9f520;  1 drivers
+v0xe9eaa0_0 .net "a", 63 0, v0xe9ef90_0;  1 drivers
+v0xe9eb80_0 .net "b", 63 0, v0xe9f070_0;  1 drivers
+v0xe9ecb0_0 .net "seff", 0 0, L_0xe9f630;  1 drivers
+v0xe9ed70_0 .net "sop", 0 0, v0xe9f140_0;  1 drivers
+v0xe9ee30_0 .net "sum", 63 0, L_0xe9f740;  alias, 1 drivers
+E_0xe8bc30 .event edge, v0xe9eaa0_0, v0xe9eb80_0, v0xe9ed70_0, v0xe9ecb0_0;
+L_0xe9f310 .part v0xe9ef90_0, 63, 1;
+L_0xe9f430 .part v0xe9f070_0, 63, 1;
+    .scope S_0xe66f70;
+T_0 ;
+    %wait E_0xe8bc30;
+    %vpi_call 3 14 "$display", "(s e f) a - (%b %b %b)", &PV<v0xe9eaa0_0, 63, 1>, &PV<v0xe9eaa0_0, 52, 11>, &PV<v0xe9eaa0_0, 0, 52> {0 0 0};
+    %vpi_call 3 15 "$display", "(s e f) b - (%b %b %b)", &PV<v0xe9eb80_0, 63, 1>, &PV<v0xe9eb80_0, 52, 11>, &PV<v0xe9eb80_0, 0, 52> {0 0 0};
+    %vpi_call 3 16 "$display", "add? - %b", v0xe9ed70_0 {0 0 0};
+    %vpi_call 3 17 "$display", "bseff: %b", v0xe9ecb0_0 {0 0 0};
+    %jmp T_0;
+    .thread T_0, $push;
+    .scope S_0xe67390;
+T_1 ;
+    %pushi/vec4 10, 0, 64;
+    %store/vec4 v0xe9f070_0, 0, 64;
+    %pushi/vec4 10, 0, 64;
+    %store/vec4 v0xe9ef90_0, 0, 64;
+    %pushi/vec4 1, 0, 1;
+    %ix/load 4, 63, 0;
+    %flag_set/imm 4, 0;
+    %store/vec4 v0xe9ef90_0, 4, 1;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0xe9f140_0, 0, 1;
+    %delay 10, 0;
+    %pushi/vec4 1, 0, 1;
+    %ix/load 4, 63, 0;
+    %flag_set/imm 4, 0;
+    %store/vec4 v0xe9f070_0, 4, 1;
+    %end;
+    .thread T_1;
+    .scope S_0xe67390;
+>>>>>>> Stashed changes
 T_2 ;
     %end;
     .thread T_2;

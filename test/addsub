@@ -1,9 +1,12 @@
-#! /usr/bin/vvp
-:ivl_version "0.9.7 " "(v0_9_7)";
+#! /usr/local/bin/vvp
+:ivl_version "10.1 (stable)";
+:ivl_delay_selection "TYPICAL";
 :vpi_time_precision + 0;
 :vpi_module "system";
+:vpi_module "vhdl_sys";
 :vpi_module "v2005_math";
 :vpi_module "va_math";
+<<<<<<< Updated upstream
 S_0x13ca040 .scope module, "addsub_test" "addsub_test" 2 1;
  .timescale 0 0;
 v0x13ec6d0_0 .var "carry", 0 0;
@@ -58,14 +61,89 @@ T_0.0 ;
     %jmp T_0.3;
 T_0.2 ;
     %set/v v0x13ec200_0, 0, 1;
+=======
+S_0x1fdea90 .scope module, "addsub_test" "addsub_test" 2 1;
+ .timescale 0 0;
+v0x2008980_0 .var "carry", 0 0;
+v0x2008a40_0 .var "cin", 0 0;
+v0x2008b10_0 .net "cout", 0 0, L_0x2009840;  1 drivers
+v0x2008c10_0 .net "res", 7 0, L_0x2009980;  1 drivers
+v0x2008ce0_0 .var "sub", 0 0;
+v0x2008d80_0 .var "x", 7 0;
+v0x2008e50_0 .var "y", 7 0;
+S_0x1fcc340 .scope module, "addsub0" "addsub" 2 10, 3 1 0, S_0x1fdea90;
+ .timescale 0 0;
+    .port_info 0 /INPUT 8 "x"
+    .port_info 1 /INPUT 8 "y"
+    .port_info 2 /INPUT 1 "sub"
+    .port_info 3 /INPUT 1 "cin"
+    .port_info 4 /INPUT 1 "carry"
+    .port_info 5 /OUTPUT 8 "sum"
+    .port_info 6 /OUTPUT 1 "cout"
+L_0x2008f20 .functor NOT 8, v0x2008e50_0, C4<00000000>, C4<00000000>, C4<00000000>;
+v0x1fdefd0_0 .net *"_s0", 7 0, L_0x2008f20;  1 drivers
+L_0x7fd714fee060 .functor BUFT 1, C4<0>, C4<0>, C4<0>, C4<0>;
+v0x20078a0_0 .net *"_s11", 0 0, L_0x7fd714fee060;  1 drivers
+v0x2007980_0 .net *"_s12", 8 0, L_0x20093a0;  1 drivers
+v0x2007a70_0 .net *"_s14", 8 0, L_0x2009550;  1 drivers
+L_0x7fd714fee0a8 .functor BUFT 1, C4<00000000>, C4<0>, C4<0>, C4<0>;
+v0x2007b50_0 .net *"_s17", 7 0, L_0x7fd714fee0a8;  1 drivers
+v0x2007c80_0 .net *"_s4", 8 0, L_0x2009120;  1 drivers
+L_0x7fd714fee018 .functor BUFT 1, C4<0>, C4<0>, C4<0>, C4<0>;
+v0x2007d60_0 .net *"_s7", 0 0, L_0x7fd714fee018;  1 drivers
+v0x2007e40_0 .net *"_s8", 8 0, L_0x2009260;  1 drivers
+v0x2007f20_0 .net "big_sum", 8 0, L_0x2009670;  1 drivers
+v0x2008090_0 .net "carry", 0 0, v0x2008980_0;  1 drivers
+v0x2008150_0 .net "cin", 0 0, v0x2008a40_0;  1 drivers
+v0x2008210_0 .net "cout", 0 0, L_0x2009840;  alias, 1 drivers
+v0x20082d0_0 .var "real_cin", 0 0;
+v0x2008390_0 .net "real_y", 7 0, L_0x2008fe0;  1 drivers
+v0x2008470_0 .net "sub", 0 0, v0x2008ce0_0;  1 drivers
+v0x2008530_0 .net "sum", 7 0, L_0x2009980;  alias, 1 drivers
+v0x2008610_0 .net "x", 7 0, v0x2008d80_0;  1 drivers
+v0x20087c0_0 .net "y", 7 0, v0x2008e50_0;  1 drivers
+E_0x1ff1890 .event edge, v0x2008470_0, v0x2008090_0, v0x2008150_0;
+L_0x2008fe0 .functor MUXZ 8, v0x2008e50_0, L_0x2008f20, v0x2008ce0_0, C4<>;
+L_0x2009120 .concat [ 8 1 0 0], v0x2008d80_0, L_0x7fd714fee018;
+L_0x2009260 .concat [ 8 1 0 0], L_0x2008fe0, L_0x7fd714fee060;
+L_0x20093a0 .arith/sum 9, L_0x2009120, L_0x2009260;
+L_0x2009550 .concat [ 1 8 0 0], v0x20082d0_0, L_0x7fd714fee0a8;
+L_0x2009670 .arith/sum 9, L_0x20093a0, L_0x2009550;
+L_0x2009840 .part L_0x2009670, 8, 1;
+L_0x2009980 .part L_0x2009670, 0, 8;
+    .scope S_0x1fcc340;
+T_0 ;
+    %wait E_0x1ff1890;
+    %load/vec4 v0x2008470_0;
+    %flag_set/vec4 8;
+    %jmp/0xz  T_0.0, 8;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x20082d0_0, 0, 1;
+    %jmp T_0.1;
+T_0.0 ;
+    %load/vec4 v0x2008090_0;
+    %flag_set/vec4 8;
+    %jmp/0xz  T_0.2, 8;
+    %load/vec4 v0x2008150_0;
+    %store/vec4 v0x20082d0_0, 0, 1;
+    %jmp T_0.3;
+T_0.2 ;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x20082d0_0, 0, 1;
+>>>>>>> Stashed changes
 T_0.3 ;
 T_0.1 ;
     %jmp T_0;
     .thread T_0, $push;
+<<<<<<< Updated upstream
     .scope S_0x13ca040;
+=======
+    .scope S_0x1fdea90;
+>>>>>>> Stashed changes
 T_1 ;
-    %vpi_call 2 21 "$display", "~~ to the sun ~~";
+    %vpi_call 2 21 "$display", "~~ to the sun ~~" {0 0 0};
     %delay 10, 0;
+<<<<<<< Updated upstream
     %movi 8, 42, 8;
     %set/v v0x13eca10_0, 8, 8;
     %movi 8, 69, 8;
@@ -79,13 +157,38 @@ T_1 ;
     %movi 8, 10, 8;
     %set/v v0x13eca90_0, 8, 8;
     %set/v v0x13ec960_0, 1, 1;
+=======
+    %pushi/vec4 42, 0, 8;
+    %store/vec4 v0x2008d80_0, 0, 8;
+    %pushi/vec4 69, 0, 8;
+    %store/vec4 v0x2008e50_0, 0, 8;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x2008ce0_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x2008a40_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x2008980_0, 0, 1;
     %delay 10, 0;
-    %vpi_call 2 36 "$finish";
+    %pushi/vec4 52, 0, 8;
+    %store/vec4 v0x2008d80_0, 0, 8;
+    %pushi/vec4 10, 0, 8;
+    %store/vec4 v0x2008e50_0, 0, 8;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x2008ce0_0, 0, 1;
+>>>>>>> Stashed changes
+    %delay 10, 0;
+    %vpi_call 2 36 "$finish" {0 0 0};
     %end;
     .thread T_1;
+<<<<<<< Updated upstream
     .scope S_0x13ca040;
 T_2 ;
     %vpi_call 2 40 "$monitor", $time, "%d (%b) %d = %d", v0x13eca10_0, v0x13ec960_0, v0x13eca90_0, v0x13ec880_0;
+=======
+    .scope S_0x1fdea90;
+T_2 ;
+    %vpi_call 2 40 "$monitor", $time, "%d (%b) %d = %d", v0x2008d80_0, v0x2008ce0_0, v0x2008e50_0, v0x2008c10_0 {0 0 0};
+>>>>>>> Stashed changes
     %end;
     .thread T_2;
 # The file index is used to find the file name in the following table.
