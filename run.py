@@ -6,13 +6,18 @@ import sys
 LIB = "lib/"
 DIR = "build/"
 
-cases = sys.argv[1:]
-
 call(["mkdir", "-p", "build"])
 
-for case in cases:
-    print("Working hard on %s" % case)
+files = sys.argv[1:]
 
-    call(["iverilog", "-o", DIR+case, LIB+case+".v", LIB+case+"_test.v"])
-    call(["vvp", DIR+case])
-    call(["rm", DIR+"*"])
+def run_test(files):
+    print("Working hard on %s" % files)
+
+    args = reduce(lambda acc, x:
+                  acc + [LIB+x+".v", LIB+x+"_test.v"], files, [])
+
+    call(["iverilog", "-o", DIR+"test"] + args + [LIB+"params.vh"])
+    call(["vvp", DIR+"test"])
+    call(["rm", DIR+"test"])
+
+run_test(files)

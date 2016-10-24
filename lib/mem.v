@@ -1,25 +1,33 @@
 module mem(
-	input mode, // '1' - read, '0' - write
-	input [63:0] address,
-	input [63:0] dataIn,
+           input                  clk, reset, mode, // '1' - read, '0' - write
+	         input [ADDR_SIZE-1:0]  addr,
+	         input [WORD_SIZE-1:0]  data_in,
+	         output [WORD_SIZE-1:0] data_out
+           );
 
-	output [63:0] dataOut
-);
+   `include "lib/params.vh"
 
-	reg [63:0] bank[1023:0];
+   // mem size (as in depth )
+   parameter MEM_SIZE = 32;
+   // cause log2(MEM_SIZE)
+   parameter ADDR_SIZE = 5;
 
-	always @* begin
-		$display("address - (%b)", address);
+	 reg [WORD_SIZE-1:0] bank[MEM_SIZE-1:0];
 
-		if (mode == 1)
-			begin
-				// read from address
-				dataOut = bank[address];	
-			end
-		else
-			begin
-				// wtrite to mem by address
-				bank[address] = dataIn;
-			end
-	end
+   reg [WORD_SIZE-1:0] data_out;
+
+   integer i;
+
+   always @(posedge reset) begin
+      if (reset) begin
+         for (i=0;i<MEM_SIZE;i=i+1) bank[i] <= 0;
+      end
+   end
+
+   always @(clk) begin
+      if (mode)
+         data_out <= bank[addr];
+      else
+         bank[addr] <= data_in;
+   end
 endmodule
