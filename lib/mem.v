@@ -1,33 +1,30 @@
 module mem(
-           input                  clk, reset, mode, // '1' - read, '0' - write
-	         input [ADDR_SIZE-1:0]  addr,
-	         input [WORD_SIZE-1:0]  data_in,
-	         output [WORD_SIZE-1:0] data_out
+           input                  clk, reset, mode, // 0 read, 1 write
+	         input [ADDR_WIDTH-1:0]  addr,
+	         input [WIDTH-1:0]  data_in,
+	         output [WIDTH-1:0] data_out
            );
 
    `include "lib/params.vh"
 
-   // mem size (as in depth )
-   parameter MEM_SIZE = 32;
-   // cause log2(MEM_SIZE)
-   parameter ADDR_SIZE = 5;
-
-	 reg [WORD_SIZE-1:0] bank[MEM_SIZE-1:0];
-
-   reg [WORD_SIZE-1:0] data_out;
+   reg [WIDTH-1:0] bank[MEMORY_DEPTH-1:0];
+   reg [WIDTH-1:0] data_out;
 
    integer i;
+   initial begin
+      $display("reading hack");
+      $readmemh("lib/hack.asm", bank, 0, (DATA_OFFSET/4)-1);
+   end
 
    always @(posedge reset) begin
-      if (reset) begin
-         for (i=0;i<MEM_SIZE;i=i+1) bank[i] <= 0;
-      end
+      for (i=0;i<MEMORY_DEPTH;i=i+1) bank[i] <= 0;
    end
 
    always @(clk) begin
       if (mode)
-         data_out <= bank[addr];
+
+        bank[addr] <= data_in;
       else
-         bank[addr] <= data_in;
+        data_out <= bank[addr];
    end
 endmodule
