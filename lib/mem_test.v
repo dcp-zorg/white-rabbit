@@ -7,7 +7,7 @@ module mem_test();
 
    wire [63:0] data_out;
 
-   `include "lib/params.vh"
+   `include "lib/config.vh"
 
    parameter DATA_OFFSET = 32;
 
@@ -52,7 +52,7 @@ module mem_test();
       else begin
          // Read instrucions
          if (!mode) begin
-            if (addr > DATA_OFFSET/4) begin
+            if (addr > (DATA_OFFSET/4)-1) begin
                $display("good bye");
                $finish;
             end

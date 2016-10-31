@@ -8,7 +8,7 @@ module addsub(
    output                     cout
 );
 
-   `include "lib/params.vh"
+   `include "lib/config.vh"
 
    wire [WORD_SIZE-1:0] real_y = sub ? ~y : y;
 

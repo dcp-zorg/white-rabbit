@@ -11,5 +11,7 @@ parameter LEET  = 1;
 parameter MEMORY_DEPTH = 128;
 // Mexican wall, but for data in memory
 parameter DATA_OFFSET = 32;
+// Program file
+parameter PROGRAM_DATA = "lib/hack.asm";
 
 `endif

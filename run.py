@@ -16,7 +16,7 @@ def run_test(files):
     args = reduce(lambda acc, x:
                   acc + [LIB+x+".v", LIB+x+"_test.v"], files, [])
 
-    call(["iverilog", "-o", DIR+"test"] + args + [LIB+"params.vh"])
+    call(["iverilog", "-o", DIR+"test"] + args + [LIB+"config.vh"])
     call(["vvp", DIR+"test"])
     call(["rm", DIR+"test"])
 

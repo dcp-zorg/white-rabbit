@@ -1,5 +1,5 @@
 module addsub_test();
-   `include "lib/params.vh"
+   `include "lib/config.vh"
 
    reg [7:0] x;
    reg [7:0] y;
