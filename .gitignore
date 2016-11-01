@@ -2,4 +2,6 @@
 build/
 *.co
 *.hi
-
+.cabal-sandbox
+cabal*
+main
