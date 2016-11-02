@@ -9,23 +9,19 @@ import AST
 
 actions :: Map.Map String Action
 actions =
-  Map.fromList [("load", Load),
-                ("bust", Bust),
-                ("shtoj", Add),
-                ("shumezoj", Mul)]
+  Map.fromList [("^", Load),
+                ("@", Bust),
+                ("+", Add),
+                ("*", Mul)]
 
-line :: Parser String
-line = do
-  res <- many1 (noneOf "\n")
-  optional newline
-  return res
+unwrap :: Maybe a -> a
+unwrap Nothing = error ""
+unwrap (Just x) = x
 
 action :: Parser Action
 action = do
-  act <- many1 lower
-  case Map.lookup act actions of
-    Just a -> return a
-    _ -> fail "wrong move boy"
+  act <- string "^" <|> string "@" <|> string "+" <|> string "*"
+  return $ unwrap $ Map.lookup act actions
   <?> "action"
 
 int :: Parser Int
@@ -38,22 +34,22 @@ int = do
 atom :: Parser Atom
 atom = do
   symbol <- many1 lower
-  return $ A symbol 0
+  return $ A symbol 0 0
   <?> "fine, rich name"
 
 bind :: Parser Bind
 bind = do
-  a <- spaces *> atom <* spaces
+  a <- spaces *> atom <* spaces <* string "=" <* spaces
   xs <- char '[' *> int `sepBy1` spaces <* char ']'
 
   return $ Bind a xs
   <?> "binding"
 
-ins :: Parser Ins
-ins = do
+call :: Parser Call
+call = do
   act <- spaces *> action <* spaces
   a <- atom
-  return $ Ins act a
+  return $ Call act a
   <?> "solid instruction"
 
 parseData :: Parser Section
@@ -63,7 +59,7 @@ parseData = do
 
 parseText :: Parser Section
 parseText = do
-  xs <- many1 $ ins <* optional newline
+  xs <- many1 $ call <* optional newline
   return $ Text xs
 
 parseAsm :: Parser Ast
